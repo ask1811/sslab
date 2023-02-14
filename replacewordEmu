@@ -1,0 +1,23 @@
+ASSUME CS: CODE, DS: DATA
+DATA SEGMENT
+LIST DW 53H, 15H, 19H, 02H
+REPLACE EQU 30H
+COUNT EQU 05H
+DATA ENDS
+CODE SEGMENT
+START:           MOV AX, DATA
+                        MOV DS, AX
+                        MOV AX, 15H
+                        MOV SI, OFFSET LIST
+                        MOV CX, COUNT
+                        MOV AX, 00
+                        CLD
+REP                 SCASW
+            JNZ LOOP
+                        MOV DI, LABEL LIST
+            MOV [DI], REPLACE
+LOOP             MOV AH, 4CH
+                        INT 21H
+CODE ENDS
+
+END START
